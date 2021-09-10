@@ -54,21 +54,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 JSONObject jsonResponse = new JSONObject(response);
                 JSONArray jsonArray = jsonResponse.getJSONArray("response");
                 JSONObject userInfo= jsonArray.getJSONObject(0);
-                firstName = userInfo.getString("first name");
-                lastName = userInfo.getString("last name");
+                firstName = userInfo.getString("first_name");
+                lastName = userInfo.getString("last_name");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            String resultingString = "Имя: " + firstName + "\n" + "Фамилия" + lastName;
+            String resultingString = "Имя: " + firstName + "\n" + "Фамилия: " + lastName;
             result.setText(resultingString);
         }
     }
 
     @Override
     public void onClick(View view) {
-        URL generateURL = generateURL( searchField.getText().toString());
-        new VKQueryTask().execute(generateURL);
+        URL generatedURL = generateURL( searchField.getText().toString());
+        new VKQueryTask().execute(generatedURL);
 
     }
     }
