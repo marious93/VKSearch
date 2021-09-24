@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.Scanner;
 
 public class NetUtil {
@@ -17,10 +18,10 @@ public class NetUtil {
     private static final String token = "access_token";
     //&access_token=10259175b5475861292b276d0b2103f8a4fde6677edb8fee1002911529f0fcba84ad2cd1939662ba758a5&
 
-    public static URL generateURL(String userId) {
+    public static URL generateURL(String userIds) {
         Uri builtUri = Uri.parse(vk_api + vk_user_get)
                 .buildUpon()
-                .appendQueryParameter(user_id, userId)
+                .appendQueryParameter(user_id, userIds)
                 .appendQueryParameter(version, "5.52")
                 .appendQueryParameter(token, "10259175b5475861292b276d0b2103f8a4fde6677edb8fee1002911529f0fcba84ad2cd1939662ba758a5")
                 .build();
@@ -33,7 +34,7 @@ public class NetUtil {
         return url;
     }
 
-    public static String getRespondfromURL(URL url) throws IOException {
+    public static String getRespondFromURL(URL url) throws IOException {
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         try {
             InputStream in = urlConnection.getInputStream();
@@ -45,7 +46,11 @@ public class NetUtil {
             } else {
                 return null;
             }
-        } finally {
+        } catch(UnknownHostException e){
+            return null;
+        }
+            finally
+         {
             urlConnection.disconnect();
 
         }
